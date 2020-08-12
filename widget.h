@@ -12,6 +12,9 @@
 #include <QVBoxLayout>
 
 #define MAX_CONTRAST 2.0
+#define PIC_MAX_WIDTH  860
+#define PIC_MAX_HEIGHT 670
+
 namespace Ui {
 class Widget;
 }
@@ -37,16 +40,20 @@ public:
     void changePicBright(cv::Mat srcMat, cv::Mat & dstMat, int value);
     void changePicContrast(cv::Mat srcMat, cv::Mat & dstMat, double value);
     QByteArray strToGBK(const QString & text);
+private:
+    void updateTextColor(QColor textColor);
+    void initPicShowWidget();
 private slots:
     void on_btnBeauti_clicked();
     void toUpdatePicBright(int value);
     void on_btnOpenPic_clicked();
     void toUpdatePicContrast(int value);
     void on_btnPutText_clicked();
-
     void on_pushButton_clicked();
-
     void on_btnSavePic_clicked();
+    void on_btnTextColorSet_clicked();
+
+    void on_spinBox_valueChanged(int arg1);
 
 private:
     Ui::Widget *ui;
@@ -65,6 +72,11 @@ private:
     //原图片大小
     int m_srcPicWidth;
     int m_srcPicHeight;
+    //默认字体颜色
+    QColor m_textColor;
+    //字体大小
+    int m_textSize;
+    QString m_text;
 };
 
 #endif // WIDGET_H

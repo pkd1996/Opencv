@@ -18,7 +18,7 @@ public:
     int getHeight(){return m_height;}
     void setWidth(int w){this->m_width = w;}
     void setHeigth(int h){this->m_height = h;}
-
+    void updateText(QString text, QColor color, int size);
     enum ResizeType{
         LEFTTOP,
         TOP,
@@ -47,6 +47,13 @@ private:
    bool m_mouseClick;
    ResizeType m_curResizeType;
    bool m_textCanMove;
+
+   //默认字体颜色
+   QColor m_textColor;
+   //字体大小
+   int m_textSize;
+   //显示字体
+   QString m_text;
 };
 
 #endif // TEXTWIDGET_H

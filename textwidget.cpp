@@ -25,6 +25,7 @@ void TextWidget::paintEvent(QPaintEvent *event)
     painter.drawRect(m_iMarginWidth, m_iMarginWidth, m_width-2*m_iMarginWidth, m_height-2*m_iMarginWidth);
     painter.setPen(QPen(Qt::red));
     painter.setBrush(QBrush(QColor(255,255,0), Qt::SolidPattern));
+
     //画出用于拖拽框体变型的八个点
     painter.drawEllipse(QPoint(m_iMarginWidth, m_iMarginWidth), m_iMarginWidth, m_iMarginWidth);
     painter.drawEllipse(QPoint(m_iMarginWidth,this->height()/2), m_iMarginWidth, m_iMarginWidth);
@@ -39,6 +40,15 @@ void TextWidget::paintEvent(QPaintEvent *event)
                                                                                     m_iMarginWidth);
     painter.drawEllipse(QPoint(this->width() - m_iMarginWidth, this->height() - m_iMarginWidth),
                                                                 m_iMarginWidth, m_iMarginWidth);
+
+    //更新显示字体
+    QRect rectText = QRect(2*m_iMarginWidth,2*m_iMarginWidth,m_width-4*m_iMarginWidth, m_height-4*m_iMarginWidth);
+    QPen pen = QPen(m_textColor);
+    QFont font;
+    font.setPointSize(m_textSize);
+    painter.setPen(pen);
+    painter.setFont(font);
+    painter.drawText(rectText, Qt::AlignLeft| Qt::AlignVCenter, m_text);
 }
 
 void TextWidget::mouseMoveEvent(QMouseEvent *event)
@@ -254,4 +264,13 @@ void TextWidget::mouseReleaseEvent(QMouseEvent *event)
         m_mouseClick = false;
         m_textCanMove = true;
     }
+}
+
+void TextWidget::updateText(QString text, QColor color, int size)
+{
+    m_textColor = color;
+    m_textSize = size;
+    if(!text.isEmpty())
+        m_text = text;
+    update();
 }
